@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html  xmlns:th="<http://www.thymeleaf.org>" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produto</title>
+    <link rel="stylesheet" th:href="@{css/styles.css}">
+    <script th:src="@{/js/script.js}"></script>
+</head>
+
+<body>
+
+<h1>Cadastro de Produto</h1>
+
+<form id="productForm">
+
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" placeholder="Descrição" required>
+    </div>
+
+    <div class="form-group">
+        <label for="preco">Preço</label>
+        <input type="number" step="0.01" id="preco" name="preco" placeholder="Preço" required>
+    </div>
+
+    <div class="form-group">
+        <label for="quant">Quantidade</label>
+        <input type="number" id="quant" name="quant" placeholder="Quantidade" required>
+    </div>
+
+    <div class="form-group">
+        <label for="tamanho">Tamanho</label>
+        <input type="text" id="tamanho" name="tamanho" placeholder="Tamanho" required>
+    </div>
+
+    <button type="button" onclick="submitForm()">Salvar Produto</button>
+</form>
+
+<div class="borderDivisor">
+    <h2>Lista de Produtos</h2>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+        <th>Tamanho</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+
+    <tbody id="productTableBody">
+    <!-- Os dados serão preenchidos aqui pelo JavaScript -->
+    </tbody>
+</table>
+
+</body>
+</html>
+
