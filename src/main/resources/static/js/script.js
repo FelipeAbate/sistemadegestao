@@ -51,6 +51,9 @@
                 row.id = `row-${product.idProduto}`;
                 row.innerHTML = `
                     <td>${product.idProduto}</td>
+                    <td>
+                    <button class="buttonExcluir" onclick="deleteRow('${product.idProduto}')">Excluir</button>
+                    </td>
                     <td><input type="text" class="descricao" value="${product.descricao}" disabled></td>
                     <td><input type="number" step="0.01" class="preco" value="${product.preco}" disabled></td>
                     <td><input type="number" class="quant" value="${product.quant}" disabled></td>
@@ -106,3 +109,26 @@
             alert(`Erro de rede: ${error}`);
         }
     }
+
+        // Função para excluir um produto
+        function deleteRow(productId) {
+            if (confirm("Tem certeza que deseja excluir este produto?")) {
+                fetch(`/products/${productId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Produto excluído com sucesso!");
+                        // Remove a linha correspondente da tabela
+                        const row = document.querySelector(`[data-id="${productId}"]`);
+                        if (row) row.remove();
+                    } else {
+                        response.text().then(msg => alert(`Erro ao excluir: ${msg}`));
+                    }
+                })
+                .catch(error => alert(`Erro ao excluir: ${error.message}`));
+            }
+        }

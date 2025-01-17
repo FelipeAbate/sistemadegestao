@@ -59,6 +59,16 @@
                 margin-top: 20px;
             }
 
+            .no-right-border {
+                 border-right: none; /* Remove a borda da lateral direita */
+
+            }
+
+            .no-left-border {
+                 border-left: none;
+            }
+
+
             th, td {
                 padding: 10px;
                 text-align: center;
@@ -90,16 +100,15 @@
 
             /* Define a largura da segunda coluna (Descrição) */
 
-            table th:nth-child(2), table td:nth-child(2)   {
+            table th:nth-child(3), table td:nth-child(3)  {
             width: 27%;
-            text-align: left;
-            }
+        }
 
-            table th:nth-child(3), table td:nth-child(3),
-            th:nth-child(4), table td:nth-child(4),
-            th:nth-child(5), table td:nth-child(5)  {
-            width: 12%;
-            }
+        table th:nth-child(4), table td:nth-child(4),
+             th:nth-child(5), table td:nth-child(5),
+             th:nth-child(6), table td:nth-child(6)  {
+             width: 12%;
+        }
 
     </style>
 
@@ -141,7 +150,8 @@
 <table>
     <thead>
     <tr>
-        <th>ID</th>
+        <th class="no-right-border">ID</th>
+        <th class="no-left-border" >Excluir</th>
         <th>Descrição</th>
         <th>Preço</th>
         <th>Quantidade</th>
