@@ -5,10 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ControllerPutCalcas {
+public class ControllerScreenOrders {
 
-    @GetMapping("/put-calcas")
+    @GetMapping("/pedidos")
     public String test(Model model) {
-        return "putcalcas";
+        return "orderscreen";
     }
 }

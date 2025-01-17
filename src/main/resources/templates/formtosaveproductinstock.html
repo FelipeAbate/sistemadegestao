@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Produto</title>
+    <title>Estoque</title>
     <link rel="stylesheet" th:href="@{css/styles.css}">
     <script th:src="@{/js/script.js}"></script>
 </head>
 
 <body>
 
-<h1>Cadastro de Produto</h1>
+<h1>Cadastrar Produto</h1>
 
 <form id="productForm">
 
@@ -38,13 +38,16 @@
 </form>
 
 <div class="borderDivisor">
+    <button class="buttonOrders">Finalizar Pedido</button>
     <h2>Lista de Produtos</h2>
 </div>
 
+<div class="table-container">
 <table>
     <thead>
     <tr>
-        <th>ID</th>
+        <th class="no-right-border">ID</th>
+        <th class="no-left-border" > <!-- Excluir --> </th>
         <th>Descrição</th>
         <th>Preço</th>
         <th>Quantidade</th>
@@ -57,7 +60,9 @@
     <!-- Os dados serão preenchidos aqui pelo JavaScript -->
     </tbody>
 </table>
+</div>
 
 </body>
+
 </html>
 

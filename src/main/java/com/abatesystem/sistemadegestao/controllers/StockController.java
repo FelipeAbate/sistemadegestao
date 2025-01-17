@@ -20,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController
-public class CadastrarProduto {
+public class StockController {
 
     @Autowired
     ProductRepository productRepository;
@@ -37,7 +37,7 @@ public class CadastrarProduto {
         List<ProdutoCalcas> productsList = productRepository.findAll();
         if(!productsList.isEmpty()) {
             for(ProdutoCalcas product : productsList) {
-                product.add(linkTo(methodOn(CadastrarProduto.class).getOneProduct(product.getIdProduto())).withSelfRel());
+                product.add(linkTo(methodOn(StockController.class).getOneProduct(product.getIdProduto())).withSelfRel());
             }
         }
         return  ResponseEntity.status(HttpStatus.OK).body(productsList);
@@ -50,7 +50,7 @@ public class CadastrarProduto {
         if (productO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("product not found");
         }
-        productO.get().add(linkTo(methodOn(CadastrarProduto.class).getAllProducts()).withRel("Product List"));
+        productO.get().add(linkTo(methodOn(StockController.class).getAllProducts()).withRel("Product List"));
         return ResponseEntity.status(HttpStatus.OK).body(productO.get());
     }
 

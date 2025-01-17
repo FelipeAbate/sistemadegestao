@@ -51,6 +51,20 @@
                 row.id = `row-${product.idProduto}`;
                 row.innerHTML = `
                     <td>${product.idProduto}</td>
+                    <td>
+                    <button class="buttonExcluir" onclick="deleteRow('${product.idProduto}')">Excluir</button>
+                    <button class="buttonAddCar" onclick="screenAddCar(this)">Add Carrinho</button>
+                    <div class="quantity-box hidden">
+                            <p>Selecione a quantidade:</p>
+                            <button class="quantity-option" data-qty="1">1</button>
+                            <button class="quantity-option" data-qty="2">2</button>
+                            <button class="quantity-option" data-qty="3">3</button>
+                            <button class="quantity-option" data-qty="4">4</button>
+                            <button class="quantity-option" data-qty="5">5</button>
+                            <button class="quantity-option" data-qty="6">6</button>
+                            <button class="quantity-option more-than-6">Mais de 6</button>
+                          </div>
+                    </td>
                     <td><input type="text" class="descricao" value="${product.descricao}" disabled></td>
                     <td><input type="number" step="0.01" class="preco" value="${product.preco}" disabled></td>
                     <td><input type="number" class="quant" value="${product.quant}" disabled></td>
@@ -68,41 +82,112 @@
             alert('Não foi possível carregar os produtos.');
         });
 
-    // Função para habilitar a edição
-    function editRow(id) {
-        const row = document.getElementById(`row-${id}`);
-        row.querySelectorAll('input').forEach(input => input.disabled = false);
-        row.querySelector('button:nth-child(1)').style.display = 'none'; // Oculta "Editar"
-        row.querySelector('button:nth-child(2)').style.display = 'inline'; // Mostra "Salvar"
-    }
-
-    // Função para salvar as alterações
-    async function saveRow(id) {
-        const row = document.getElementById(`row-${id}`);
-        const descricao = row.querySelector('.descricao').value;
-        const preco = parseFloat(row.querySelector('.preco').value);
-        const quant = parseInt(row.querySelector('.quant').value, 10);
-        const tamanho = row.querySelector('.tamanho').value;
-
-        const updatedProduct = { descricao, preco, quant, tamanho };
-
-        try {
-            const response = await fetch(`/products/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedProduct),
-            });
-
-            if (response.ok) {
-                alert('Produto atualizado com sucesso!');
-                row.querySelectorAll('input').forEach(input => input.disabled = true);
-                row.querySelector('button:nth-child(1)').style.display = 'inline'; // Mostra "Editar"
-                row.querySelector('button:nth-child(2)').style.display = 'none'; // Oculta "Salvar"
-            } else {
-                const error = await response.text();
-                alert(`Erro ao atualizar produto: ${error}`);
+        // Função para excluir um produto
+        function deleteRow(productId) {
+            if (confirm("Tem certeza que deseja excluir este produto?")) {
+                fetch(`/products/${productId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Produto excluído com sucesso!");
+                        // Remove a linha correspondente da tabela
+                        const row = document.querySelector(`[data-id="${productId}"]`);
+                        if (row) row.remove();
+                    } else {
+                        response.text().then(msg => alert(`Erro ao excluir: ${msg}`));
+                    }
+                })
+                .catch(error => alert(`Erro ao excluir: ${error.message}`));
             }
-        } catch (error) {
-            alert(`Erro de rede: ${error}`);
+        }
+
+        // add Carrinho
+
+    async function screenAddCar(button) {
+        let quantityBox = button.nextElementSibling;
+
+        // Fecha todos os outros quadros antes de abrir o atual
+        document.querySelectorAll('.quantity-box').forEach(box => {
+            if (box !== quantityBox) box.classList.add('hidden');
+        });
+
+        // Alterna a exibição do quadro de opções
+        quantityBox.classList.toggle('hidden');
+
+        // Adiciona evento apenas se ainda não foi adicionado
+        if (!quantityBox.dataset.eventsAdded) {
+            quantityBox.dataset.eventsAdded = "true"; // Marca que os eventos já foram adicionados
+
+            quantityBox.querySelectorAll('.quantity-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    let selectedQty = this.getAttribute('data-qty') || 'Mais de 6';
+                    alert(`Você selecionou: ${selectedQty}`);
+
+                    // Esconde o quadro depois da seleção
+                    quantityBox.classList.add('hidden');
+                });
+            });
         }
     }
+
+    // Função para habilitar a edição
+        function editRow(id) {
+            const row = document.getElementById(`row-${id}`);
+            row.querySelectorAll('input').forEach(input => input.disabled = false);
+
+            // Seleciona os botões diretamente pelo texto ou classe
+            const editButton = row.querySelector('button[onclick^="editRow"]');
+            const saveButton = row.querySelector('button[onclick^="saveRow"]');
+
+            if (editButton && saveButton) {
+                editButton.style.display = 'none'; // Oculta "Editar"
+                saveButton.style.display = 'inline'; // Mostra "Salvar"
+            }
+        }
+
+
+
+        // Função para salvar as alterações
+        async function saveRow(id) {
+            const row = document.getElementById(`row-${id}`);
+            const descricao = row.querySelector('.descricao').value;
+            const preco = parseFloat(row.querySelector('.preco').value);
+            const quant = parseInt(row.querySelector('.quant').value, 10);
+            const tamanho = row.querySelector('.tamanho').value;
+
+            const updatedProduct = { descricao, preco, quant, tamanho };
+
+            try {
+                const response = await fetch(`/products/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedProduct),
+                });
+
+                if (response.ok) {
+                    alert('Produto atualizado com sucesso!');
+                    row.querySelectorAll('input').forEach(input => input.disabled = true);
+
+                    const editButton = row.querySelector('button[onclick^="editRow"]');
+                    const saveButton = row.querySelector('button[onclick^="saveRow"]');
+
+                    if (editButton && saveButton) {
+                        editButton.style.display = 'inline'; // Mostra "Editar"
+                        saveButton.style.display = 'none'; // Oculta "Salvar"
+                    }
+                } else {
+                    const error = await response.text();
+                    alert(`Erro ao atualizar produto: ${error}`);
+                }
+            } catch (error) {
+                alert(`Erro de rede: ${error}`);
+            }
+        }
+
+
+
+
