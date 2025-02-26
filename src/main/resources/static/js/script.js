@@ -1,4 +1,8 @@
 
+        //SCRIPT PARA ESTOQUE
+
+
+        //Função para preencher form Cadastro de Pedidos
         async function submitForm() {
         const form = document.getElementById('productForm');
         const formData = new FormData(form);
@@ -54,7 +58,7 @@
                     <td>
                     <button class="buttonExcluir" onclick="deleteRow('${product.idProduto}')">Excluir</button>
                     <button class="buttonAddCar" onclick="screenAddCar(this)">Add Carrinho</button>
-                    <div class="quantity-box hidden">
+                          <div class="quantity-box hidden">
                             <p>Selecione a quantidade:</p>
                             <button class="quantity-option" data-qty="1">1</button>
                             <button class="quantity-option" data-qty="2">2</button>
@@ -83,30 +87,29 @@
         });
 
         // Função para excluir um produto
-        function deleteRow(productId) {
-            if (confirm("Tem certeza que deseja excluir este produto?")) {
-                fetch(`/products/${productId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
+                function deleteRow(productId) {
+                    if (confirm("Tem certeza que deseja excluir este produto?")) {
+                        fetch(`/products/${productId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                alert("Produto excluído com sucesso!");
+                                // Remove a linha correspondente da tabela
+                                const row = document.querySelector(`[data-id="${productId}"]`);
+                                if (row) row.remove();
+                            } else {
+                                response.text().then(msg => alert(`Erro ao excluir: ${msg}`));
+                            }
+                        })
+                        .catch(error => alert(`Erro ao excluir: ${error.message}`));
                     }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Produto excluído com sucesso!");
-                        // Remove a linha correspondente da tabela
-                        const row = document.querySelector(`[data-id="${productId}"]`);
-                        if (row) row.remove();
-                    } else {
-                        response.text().then(msg => alert(`Erro ao excluir: ${msg}`));
-                    }
-                })
-                .catch(error => alert(`Erro ao excluir: ${error.message}`));
-            }
-        }
+                }
 
-        // add Carrinho
-
+    //função para abrir telinha opções quantidade
     async function screenAddCar(button) {
         let quantityBox = button.nextElementSibling;
 
@@ -134,60 +137,59 @@
         }
     }
 
+
     // Função para habilitar a edição
-        function editRow(id) {
-            const row = document.getElementById(`row-${id}`);
-            row.querySelectorAll('input').forEach(input => input.disabled = false);
+    function editRow(id) {
+        const row = document.getElementById(`row-${id}`);
+        row.querySelectorAll('input').forEach(input => input.disabled = false);
 
-            // Seleciona os botões diretamente pelo texto ou classe
-            const editButton = row.querySelector('button[onclick^="editRow"]');
-            const saveButton = row.querySelector('button[onclick^="saveRow"]');
+        // Seleciona os botões diretamente pelo texto ou classe
+        const editButton = row.querySelector('button[onclick^="editRow"]');
+        const saveButton = row.querySelector('button[onclick^="saveRow"]');
 
-            if (editButton && saveButton) {
-                editButton.style.display = 'none'; // Oculta "Editar"
-                saveButton.style.display = 'inline'; // Mostra "Salvar"
-            }
+        if (editButton && saveButton) {
+            editButton.style.display = 'none'; // Oculta "Editar"
+            saveButton.style.display = 'inline'; // Mostra "Salvar"
         }
+    }
 
 
+    // Função para salvar as alterações
+    async function saveRow(id) {
+        const row = document.getElementById(`row-${id}`);
+        const descricao = row.querySelector('.descricao').value;
+        const preco = parseFloat(row.querySelector('.preco').value);
+        const quant = parseInt(row.querySelector('.quant').value, 10);
+        const tamanho = row.querySelector('.tamanho').value;
 
-        // Função para salvar as alterações
-        async function saveRow(id) {
-            const row = document.getElementById(`row-${id}`);
-            const descricao = row.querySelector('.descricao').value;
-            const preco = parseFloat(row.querySelector('.preco').value);
-            const quant = parseInt(row.querySelector('.quant').value, 10);
-            const tamanho = row.querySelector('.tamanho').value;
+        const updatedProduct = { descricao, preco, quant, tamanho };
 
-            const updatedProduct = { descricao, preco, quant, tamanho };
+        try {
+            const response = await fetch(`/products/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedProduct),
+            });
 
-            try {
-                const response = await fetch(`/products/${id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(updatedProduct),
-                });
+            if (response.ok) {
+                alert('Produto atualizado com sucesso!');
+                row.querySelectorAll('input').forEach(input => input.disabled = true);
 
-                if (response.ok) {
-                    alert('Produto atualizado com sucesso!');
-                    row.querySelectorAll('input').forEach(input => input.disabled = true);
+                const editButton = row.querySelector('button[onclick^="editRow"]');
+                const saveButton = row.querySelector('button[onclick^="saveRow"]');
 
-                    const editButton = row.querySelector('button[onclick^="editRow"]');
-                    const saveButton = row.querySelector('button[onclick^="saveRow"]');
-
-                    if (editButton && saveButton) {
-                        editButton.style.display = 'inline'; // Mostra "Editar"
-                        saveButton.style.display = 'none'; // Oculta "Salvar"
-                    }
-                } else {
-                    const error = await response.text();
-                    alert(`Erro ao atualizar produto: ${error}`);
+                if (editButton && saveButton) {
+                    editButton.style.display = 'inline'; // Mostra "Editar"
+                    saveButton.style.display = 'none'; // Oculta "Salvar"
                 }
-            } catch (error) {
-                alert(`Erro de rede: ${error}`);
+            } else {
+                const error = await response.text();
+                alert(`Erro ao atualizar produto: ${error}`);
             }
+        } catch (error) {
+            alert(`Erro de rede: ${error}`);
         }
-
+    }
 
 
 

@@ -18,12 +18,12 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPedido;
 
-    @ManyToOne
-    @JoinColumn(name = "idProduto", nullable = false)
-    private ProdutoCalcas produto;
-
-    private int quantidadePedida;
     private LocalDateTime dataPedido;
+    private int quantidadePedida;
+
+    @ManyToOne
+    @JoinColumn(name = "id_produto", nullable = false)
+    private ProdutoCalcas idProduto;
 
     public UUID getIdPedido() {
         return idPedido;
@@ -31,22 +31,6 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
 
     public void setIdPedido(UUID idPedido) {
         this.idPedido = idPedido;
-    }
-
-    public ProdutoCalcas getProduto() {
-        return produto;
-    }
-
-    public void setProduto(ProdutoCalcas produto) {
-        this.produto = produto;
-    }
-
-    public int getQuantidadePedida() {
-        return quantidadePedida;
-    }
-
-    public void setQuantidadePedida(int quantidadePedida) {
-        this.quantidadePedida = quantidadePedida;
     }
 
     public LocalDateTime getDataPedido() {
@@ -57,4 +41,20 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
         this.dataPedido = dataPedido;
     }
 
+
+    public int getQuantidadePedida() {
+        return quantidadePedida;
+    }
+
+    public void setQuantidadePedida(int quantidadePedida) {
+        this.quantidadePedida = quantidadePedida;
+    }
+
+    public ProdutoCalcas getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(ProdutoCalcas idProduto) {
+        this.idProduto = idProduto;
+    }
 }
