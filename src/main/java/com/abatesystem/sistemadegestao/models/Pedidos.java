@@ -1,6 +1,7 @@
 package com.abatesystem.sistemadegestao.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
@@ -18,12 +19,19 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPedido;
 
-    private LocalDateTime dataPedido;
-    private int quantidadePedida;
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime dataCriacao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Clientes idCliente;
 
     @ManyToOne
     @JoinColumn(name = "id_produto", nullable = false)
-    private ProdutoCalcas idProduto;
+    private Calcas idProduto;
+
+    private int quant;
 
     public UUID getIdPedido() {
         return idPedido;
@@ -33,28 +41,35 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
         this.idPedido = idPedido;
     }
 
-    public LocalDateTime getDataPedido() {
-        return dataPedido;
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setDataPedido(LocalDateTime dataPedido) {
-        this.dataPedido = dataPedido;
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
-
-    public int getQuantidadePedida() {
-        return quantidadePedida;
-    }
-
-    public void setQuantidadePedida(int quantidadePedida) {
-        this.quantidadePedida = quantidadePedida;
-    }
-
-    public ProdutoCalcas getIdProduto() {
+    public Calcas getIdProduto() {
         return idProduto;
     }
 
-    public void setIdProduto(ProdutoCalcas idProduto) {
+    public void setIdProduto(Calcas idProduto) {
         this.idProduto = idProduto;
+    }
+
+    public Clientes getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Clientes idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public int getQuant() {
+        return quant;
+    }
+
+    public void setQuant(int quant) {
+        this.quant = quant;
     }
 }

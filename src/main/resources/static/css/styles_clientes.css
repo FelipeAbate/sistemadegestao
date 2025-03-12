@@ -1,0 +1,160 @@
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 47px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 94%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            grid-column: span 4;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .buttonExcluir {
+            background-color: white;
+            color: red;
+        }
+
+        .buttonExcluir:hover {
+            background-color: red;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .buttonAddCar {
+            background-color: white;
+            color: green;
+        }
+
+        .buttonAddCar:hover {
+             background-color: green;
+             color: white;
+        }
+
+        .buttonOrders {
+             margin-left: 1182px;
+             margin-top: 25px;
+        }
+
+         .borderDivisor{
+            border-top: solid 1px #E0E0E0;
+            margin-top: 35px;
+            margin-left: 22px;
+            margin-right: 22px;
+         }
+
+         h2 {
+            margin-top: -38px;
+            margin-bottom: 37px;
+            font-size: 30px;
+            text-align: center;
+         }
+
+         .table-container {
+             max-height: 450px; /* Altura máxima da tabela antes da rolagem */
+             overflow-y: auto; /* Adiciona rolagem vertical */
+             border: 1px solid #ccc; /* Apenas para visualização */
+             margin-bottom: 400px; / *Um espaço em baixo da table para ficar mais confortável */
+         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+        }
+
+        thead th {
+            border-top: none;
+            border-left: none;  /* Remove bordas verticais */
+            border-right: none;
+            position: sticky;
+            top: 0;
+            background: white; /* Fundo branco para sobrepor os dados */
+            z-index: 10; /* Mantém o cabeçalho acima do tbody */
+            border-bottom: 2px solid black; /* Destaca a separação */
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        tbody td {
+            border-left: none;  /* Remove bordas verticais */
+            border-right: none;
+        }
+
+        table td:nth-child(1)  {
+            border-right: none;
+            width: 10%;
+        }
+
+        table td:nth-child(2)  {
+            border-left: none;
+        }
+
+        table th:nth-child(3), table td:nth-child(3)  {
+            width: 17%;
+        }
+
+        table th:nth-child(4), table td:nth-child(4)  {
+             width: 13%;
+        }
+
+        table th:nth-child(5), table td:nth-child(5)  {
+            width: 33%;
+        }
+
+        table input {
+            width: 70%;
+            padding: 9px;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+        }
+
+        /* Ajusta o estilo ao desabilitar os inputs */
+        table input:disabled {
+            background-color: white;
+            color: #666; /* Cor do texto */
+            border: 0px;
+            cursor: not-allowed;
+        }
+
+

@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class StockScreenController {
+public class ControllerEstoque {
 
     @GetMapping("/estoque")
-    public String showForm() {
-        return "formtosaveproductinstock";
+    public String estoque() {
+        return "estoque_salvar_pdt";
     }
 }

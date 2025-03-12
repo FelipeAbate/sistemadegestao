@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "TB_CALCAS")
-public class ProdutoCalcas extends RepresentationModel<ProdutoCalcas> implements Serializable {
+public class Calcas extends RepresentationModel<Calcas> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -19,8 +19,8 @@ public class ProdutoCalcas extends RepresentationModel<ProdutoCalcas> implements
     private UUID idProduto;
     private String descricao;
     private BigDecimal preco;
-    private int quant;
     private String tamanho;
+    private int qtdeEstoque;
 
     public UUID getIdProduto() {
         return idProduto;
@@ -46,14 +46,6 @@ public class ProdutoCalcas extends RepresentationModel<ProdutoCalcas> implements
         this.preco = preco;
     }
 
-    public int getQuant() {
-        return quant;
-    }
-
-    public void setQuant(int quant) {
-        this.quant = quant;
-    }
-
     public String getTamanho() {
         return tamanho;
     }
@@ -61,4 +53,13 @@ public class ProdutoCalcas extends RepresentationModel<ProdutoCalcas> implements
     public void setTamanho(String tamanho) {
         this.tamanho = tamanho;
     }
+
+    public int getQtdeEstoque() {
+        return qtdeEstoque;
+    }
+
+    public void setQtdeEstoque(int qtdeEstoque) {
+        this.qtdeEstoque = qtdeEstoque;
+    }
+
 }

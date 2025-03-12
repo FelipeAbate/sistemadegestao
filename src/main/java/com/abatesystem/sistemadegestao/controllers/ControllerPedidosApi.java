@@ -1,12 +1,13 @@
 package com.abatesystem.sistemadegestao.controllers;
 
+import com.abatesystem.sistemadegestao.dtos.PedidoDetalhadoDTO;
 import com.abatesystem.sistemadegestao.dtos.PedidosRecordDto;
 import com.abatesystem.sistemadegestao.dtos.PedidosResponseDto;
 import com.abatesystem.sistemadegestao.models.Pedidos;
-import com.abatesystem.sistemadegestao.models.ProdutoCalcas;
-import com.abatesystem.sistemadegestao.repositories.OrdersRepository;
+import com.abatesystem.sistemadegestao.models.Calcas;
+import com.abatesystem.sistemadegestao.repositories.PedidosRepository;
 
-import com.abatesystem.sistemadegestao.repositories.ProductRepository;
+import com.abatesystem.sistemadegestao.repositories.CalcasRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController
-public class OrdersController {
+public class ControllerPedidosApi {
 
     @Autowired
-    OrdersRepository ordersRepository;
+    PedidosRepository pedidosRepository;
 
     @Autowired
-    ProductRepository productRepository;
+    CalcasRepository calcasRepository;
 
     @PostMapping("/order")
     public ResponseEntity<Pedidos> savePedido(@RequestBody @Valid PedidosRecordDto pedidosRecordDto) {
@@ -38,53 +39,68 @@ public class OrdersController {
         BeanUtils.copyProperties(pedidosRecordDto, pedidos);
 
         // Buscar o produto pelo ID e associá-lo ao pedido
-        ProdutoCalcas produto = productRepository.findById(pedidosRecordDto.idProduto())
+        Calcas produto = calcasRepository.findById(pedidosRecordDto.idProduto())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
 
         pedidos.setIdProduto(produto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(ordersRepository.save(pedidos));
+        return ResponseEntity.status(HttpStatus.CREATED).body(pedidosRepository.save(pedidos));
     }
 
+    //colunas tb_pedidos
     @GetMapping("/order")
     public ResponseEntity<List<PedidosResponseDto>> getAllPedidos() {
-        List<PedidosResponseDto> pedidos = ordersRepository.findAll()
+        List<PedidosResponseDto> pedidos = pedidosRepository.findAll()
                 .stream()
                 .map(PedidosResponseDto::new) // Converte os pedidos para o DTO de saída
                 .toList();
         return ResponseEntity.ok(pedidos);
     }
 
+    // executa o JOIN pedidos, (tb's: calcas,pedidos,clientes)
+    // exibe colunas tb_calcas + o link para todos produtos:
+    // "Product List": "href": "http://localhost:8080/order"
     @GetMapping("/order/{id}")
     public ResponseEntity<Object> getOnePedido (@PathVariable(value="id") UUID id){
-        Optional<Pedidos> pedido = ordersRepository.findById(id);
+        Optional<Pedidos> pedido = pedidosRepository.findById(id);
 
         if (pedido.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("product not found");
         }
-        pedido.get().add(linkTo(methodOn(OrdersController.class).getAllPedidos()).withRel("Product List"));
+        pedido.get().add(linkTo(methodOn(ControllerPedidosApi.class).getAllPedidos()).withRel("Product List"));
         return ResponseEntity.status(HttpStatus.OK).body(pedido.get());
+    }
+
+    //Faz o JOIN Pedido perfeitamente e nada mais
+    @GetMapping("/order/details/{id}")
+    public ResponseEntity<List<PedidoDetalhadoDTO>> getPedidoDetalhado(@PathVariable UUID id) {
+        List<PedidoDetalhadoDTO> pedidos = pedidosRepository.buscarPedidoDetalhado(id);
+
+        if (pedidos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(pedidos);
     }
 
     @PutMapping("/order/{id}")
     public ResponseEntity<Object> updatePedido(@PathVariable(value="id") UUID id,
                                                 @RequestBody @Valid PedidosRecordDto pedidosRecordDto) {
-        Optional<Pedidos> pedido= ordersRepository.findById(id);
+        Optional<Pedidos> pedido= pedidosRepository.findById(id);
         if(pedido.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("product not found");
         }
         var pedidos = pedido.get();
         BeanUtils.copyProperties(pedidosRecordDto, pedidos);
-        return ResponseEntity.status(HttpStatus.OK).body(ordersRepository.save(pedidos));
+        return ResponseEntity.status(HttpStatus.OK).body(pedidosRepository.save(pedidos));
     }
 
     @DeleteMapping("/order/{id}")
     public ResponseEntity<Object> deletePedido(@PathVariable(value="id") UUID id) {
-        Optional<Pedidos> pedido = ordersRepository.findById(id);
+        Optional<Pedidos> pedido = pedidosRepository.findById(id);
         if(pedido.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
         }
-        ordersRepository.delete(pedido.get());
+        pedidosRepository.delete(pedido.get());
         return ResponseEntity.status(HttpStatus.OK).body("Product deleted sucessfully");
     }
 

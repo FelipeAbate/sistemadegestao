@@ -2,15 +2,19 @@ package com.abatesystem.sistemadegestao.dtos;
 
 import com.abatesystem.sistemadegestao.models.Pedidos;
 
-import java.time.format.DateTimeFormatter;
+
+import java.time.LocalDateTime;
+
 import java.util.UUID;
 
-public record PedidosResponseDto(UUID idPedido, String dataPedido, int quantidadePedida) {
+public record PedidosResponseDto(UUID idPedido, LocalDateTime dataCriacao, UUID idCliente,
+        UUID idProduto, int quant) {
     public PedidosResponseDto(Pedidos pedido) {
         this(pedido.getIdPedido(),
-                pedido.getDataPedido().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                pedido.getQuantidadePedida());
+                pedido.getDataCriacao(),
+                pedido.getIdCliente().getIdCliente(),
+                pedido.getIdProduto().getIdProduto(),
+                pedido.getQuant());
     }
-
 }
 

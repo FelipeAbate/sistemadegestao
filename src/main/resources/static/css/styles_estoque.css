@@ -66,13 +66,13 @@
         }
 
         .buttonOrders {
-             margin-left: 1182px;
-             margin-top: 88px;
+             margin-left: 1125px;
+             margin-top: 25px;
         }
 
          .borderDivisor{
             border-top: solid 1px #E0E0E0;
-            margin-top: 60px;
+            margin-top: 35px;
             margin-left: 22px;
             margin-right: 22px;
          }
@@ -85,15 +85,16 @@
          }
 
          .table-container {
-             max-height: 300px; /* Altura máxima da tabela antes da rolagem */
+             max-height: 450px; /* Altura máxima da tabela antes da rolagem */
              overflow-y: auto; /* Adiciona rolagem vertical */
              border: 1px solid #ccc; /* Apenas para visualização */
+             margin-bottom: 400px; / *Um espaço em baixo da table para ficar mais confortável */
          }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 14px;
         }
 
         thead th {
@@ -105,14 +106,6 @@
             background: white; /* Fundo branco para sobrepor os dados */
             z-index: 10; /* Mantém o cabeçalho acima do tbody */
             border-bottom: 2px solid black; /* Destaca a separação */
-        }
-
-        .no-right-border {
-            border-right: none;
-        }
-
-        .no-left-border {
-            border-left: none;
         }
 
         th, td {
@@ -128,6 +121,7 @@
 
         table td:nth-child(1)  {
             border-right: none;
+            width: 10%;
         }
 
         table td:nth-child(2)  {
@@ -141,7 +135,11 @@
         table th:nth-child(4), table td:nth-child(4),
             th:nth-child(5), table td:nth-child(5),
             th:nth-child(6), table td:nth-child(6)  {
-            width: 9%;
+            width: 10%;
+        }
+
+        table th:nth-child(7), table td:nth-child(7)  {
+            width: 14%;
         }
 
         table input {

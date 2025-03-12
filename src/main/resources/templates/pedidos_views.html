@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html  xmlns:th="<http://www.thymeleaf.org>" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <link rel="stylesheet" th:href="@{css/styles_pedidos.css}">
+    <script th:src="@{/js/pedidos.js}"></script>
+
+</head>
+
+<body>
+
+<h1>Pedidos</h1>
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th> <!-- Excluir --> </th>
+            <th>ID PEDIDO</th>
+            <th>DATA PEDIDO</th>
+            <th>NOME CLIENTE</th>
+            <th>PRODUTO</th>
+            <th>QTDE </th>
+            <th>PREÇO</th>
+
+        </tr>
+        </thead>
+
+        <tbody id="productTableBody">
+        <!-- Os dados serão preenchidos aqui pelo JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
+
+

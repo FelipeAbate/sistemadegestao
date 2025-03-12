@@ -11,8 +11,8 @@
         const data = {
             descricao: formData.get('descricao'),
             preco: parseFloat(formData.get('preco')),
-            quant: parseInt(formData.get('quant'), 10),
-            tamanho: formData.get('tamanho')
+            tamanho: formData.get('tamanho'),
+            qtdeEstoque: parseInt(formData.get('qtdeEstoque'), 10)
         };
 
         try {
@@ -36,8 +36,8 @@
         }
     }
 
-    // Fazendo a requisição GET para o endpoint /products
-    // para carregar produtos
+
+    // Fazendo a requisição GET para o endpoint /products, para carregar produtos
     fetch('/products')
         .then(response => {
             if (!response.ok) {
@@ -54,30 +54,33 @@
                 const row = document.createElement('tr');
                 row.id = `row-${product.idProduto}`;
                 row.innerHTML = `
-                    <td>${product.idProduto}</td>
+
                     <td>
                     <button class="buttonExcluir" onclick="deleteRow('${product.idProduto}')">Excluir</button>
-                    <button class="buttonAddCar" onclick="screenAddCar(this)">Add Carrinho</button>
-                          <div class="quantity-box hidden">
-                            <p>Selecione a quantidade:</p>
-                            <button class="quantity-option" data-qty="1">1</button>
-                            <button class="quantity-option" data-qty="2">2</button>
-                            <button class="quantity-option" data-qty="3">3</button>
-                            <button class="quantity-option" data-qty="4">4</button>
-                            <button class="quantity-option" data-qty="5">5</button>
-                            <button class="quantity-option" data-qty="6">6</button>
-                            <button class="quantity-option more-than-6">Mais de 6</button>
-                          </div>
+                    <button onclick="editRow('${product.idProduto}')">Editar</button>
+                    <button onclick="saveRow('${product.idProduto}')" style="display: none;">Salvar</button>
                     </td>
+                    <td>${product.idProduto}</td>
                     <td><input type="text" class="descricao" value="${product.descricao}" disabled></td>
                     <td><input type="number" step="0.01" class="preco" value="${product.preco}" disabled></td>
-                    <td><input type="number" class="quant" value="${product.quant}" disabled></td>
                     <td><input type="text" class="tamanho" value="${product.tamanho}" disabled></td>
+                    <td><input type="number" class="qtdeEstoque" value="${product.qtdeEstoque}" disabled></td>
                     <td>
-                        <button onclick="editRow('${product.idProduto}')">Editar</button>
-                        <button onclick="saveRow('${product.idProduto}')" style="display: none;">Salvar</button>
+                    <button class="buttonAddCar" onclick="screenAddCar(this)">Add Carrinho</button>
+                    <div class="quantity-box hidden">
+                    <p>Selecione a quantidade:</p>
+                    <button class="quantity-option" data-qty="1">1</button>
+                    <button class="quantity-option" data-qty="2">2</button>
+                    <button class="quantity-option" data-qty="3">3</button>
+                    <button class="quantity-option" data-qty="4">4</button>
+                    <button class="quantity-option" data-qty="5">5</button>
+                    <button class="quantity-option" data-qty="6">6</button>
+                    <button class="quantity-option more-than-6">Mais de 6</button>
+                    </div>
                     </td>
+
                 `;
+
                 tableBody.appendChild(row);
             });
         })
@@ -85,6 +88,7 @@
             console.error('Erro:', error);
             alert('Não foi possível carregar os produtos.');
         });
+
 
         // Função para excluir um produto
                 function deleteRow(productId) {
@@ -159,10 +163,10 @@
         const row = document.getElementById(`row-${id}`);
         const descricao = row.querySelector('.descricao').value;
         const preco = parseFloat(row.querySelector('.preco').value);
-        const quant = parseInt(row.querySelector('.quant').value, 10);
         const tamanho = row.querySelector('.tamanho').value;
+        const qtdeEstoque = parseInt(row.querySelector('.qtdeEstoque').value, 10);
 
-        const updatedProduct = { descricao, preco, quant, tamanho };
+        const updatedProduct = { descricao, preco, tamanho, qtdeEstoque };
 
         try {
             const response = await fetch(`/products/${id}`, {

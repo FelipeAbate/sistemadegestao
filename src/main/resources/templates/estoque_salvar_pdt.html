@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque</title>
-    <link rel="stylesheet" th:href="@{css/styles.css}">
-    <script th:src="@{/js/script.js}"></script>
+    <link rel="stylesheet" th:href="@{css/styles_estoque.css}">
+    <script th:src="@{/js/estoque.js}"></script>
 </head>
 
 <body>
@@ -25,13 +25,13 @@
     </div>
 
     <div class="form-group">
-        <label for="quant">Quantidade</label>
-        <input type="number" id="quant" name="quant" placeholder="Quantidade" required>
+        <label for="tamanho">Tamanho</label>
+        <input type="text" id="tamanho" name="tamanho" placeholder="Tamanho" required>
     </div>
 
     <div class="form-group">
-        <label for="tamanho">Tamanho</label>
-        <input type="text" id="tamanho" name="tamanho" placeholder="Tamanho" required>
+        <label for="qtdeEstoque">Quantidade</label>
+        <input type="number" id="qtdeEstoque" name="qtdeEstoque" placeholder="Quantidade" required>
     </div>
 
     <button type="button" onclick="submitForm()">Salvar Produto</button>
@@ -49,13 +49,13 @@
 <table>
     <thead>
     <tr>
-        <th class="no-right-border">ID</th>
-        <th class="no-left-border" > <!-- Excluir --> </th>
-        <th>Descrição</th>
-        <th>Preço</th>
-        <th>Quantidade</th>
-        <th>Tamanho</th>
-        <th>Ações</th>
+        <th>AÇÕES</th>
+        <th>ID</th>
+        <th>DESCRIÇÃO</th>
+        <th>PREÇO</th>
+        <th>TAMANHO</th>
+        <th>QTDE</th>
+        <th>PEDIR</th>
     </tr>
     </thead>
 

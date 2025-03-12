@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html  xmlns:th="<http://www.thymeleaf.org>" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLIENTES</title>
+    <link rel="stylesheet" th:href="@{css/styles_clientes.css}">
+    <script th:src="@{/js/clientescript.js}"></script>
+</head>
+
+<body>
+
+<h1>Cadastrar Cliente</h1>
+
+<form id="clientesForm">
+
+    <div class="form-group">
+        <label for="nomeCliente">Nome</label>
+        <input type="text" id="nomeCliente" name="nomeCliente" placeholder="Nome" required>
+    </div>
+
+    <div class="form-group">
+        <label for="sobreNomeCliente">Nome</label>
+        <input type="text" id="sobreNomeCliente" name="sobreNomeCliente" placeholder="Sobre Nome" required>
+    </div>
+
+    <div class="form-group">
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" name="endereco" placeholder="Endereço" required>
+    </div>
+
+    <div class="form-group">
+        <label for="telefone">Endereço</label>
+        <input type="text" id="telefone" name="telefone" placeholder="Telefone" required>
+    </div>
+
+    <button type="button" onclick="submitForm()">Salvar Cliente</button>
+</form>
+
+<div class="borderDivisor">
+    <a href="http://localhost:8080/pedidos" target="_self">
+        <button class="buttonOrders" >Finalizar Pedido</button>
+    </a>
+
+    <h2>Lista de Clientes</h2>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>AÇÕES</th>
+            <th>ID CLIENTE</th>
+            <th>NOME</th>
+            <th>SOBRE NOME</th>
+            <th>ENDEREÇO</th>
+            <th>TELEFONE</th>
+
+        </tr>
+        </thead>
+
+        <tbody id="clientesTableBody">
+        <!-- Os dados serão preenchidos aqui pelo JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>
