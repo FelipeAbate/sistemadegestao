@@ -16,13 +16,14 @@ public interface PedidosRepository extends JpaRepository<Pedidos, UUID>{
             "p.idPedido, p.dataCriacao, c.nomeCliente, cal.descricao, p.quant, cal.preco) " +
             "FROM Pedidos p " +
             "JOIN p.idProduto cal " +
-            "JOIN p.idCliente c " +
-            "WHERE p.idPedido = :idPedido")
-    List<PedidoDetalhadoDTO> buscarPedidoDetalhado(@Param("idPedido") UUID idPedido);
+            "JOIN p.idCliente c "
+            )
+    List<PedidoDetalhadoDTO> buscarPedidoDetalhado();
 }
-    // O JOIN JPQL (JPA) -> PedidoDetalhadoDTO
 
-    /*
+ /*
+     O JOIN JPQL (JPA) -> PedidoDetalhadoDTO
+
      EM SQL PURO
 
      SELECT tb_pedidos.id_pedido, tb_pedidos.data_criacao, tb_clientes.nome_cliente,
@@ -32,7 +33,7 @@ public interface PedidosRepository extends JpaRepository<Pedidos, UUID>{
 
      INNER JOIN tb_pedidos ON tb_calcas.id_produto = tb_pedidos.id_produto
      INNER JOIN tb_clientes ON tb_clientes.id_cliente = tb_pedidos.id_cliente
-     */
+ */
 
 
 

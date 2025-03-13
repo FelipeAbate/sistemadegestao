@@ -47,7 +47,8 @@ public class ControllerPedidosApi {
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidosRepository.save(pedidos));
     }
 
-    //colunas tb_pedidos
+    // Fazendo a requisição GET para o endpoint ('/order') Mostra todos pedidos
+    // select * from tb_pedidos
     @GetMapping("/order")
     public ResponseEntity<List<PedidosResponseDto>> getAllPedidos() {
         List<PedidosResponseDto> pedidos = pedidosRepository.findAll()
@@ -72,15 +73,16 @@ public class ControllerPedidosApi {
     }
 
     //Faz o JOIN Pedido perfeitamente e nada mais
-    @GetMapping("/order/details/{id}")
-    public ResponseEntity<List<PedidoDetalhadoDTO>> getPedidoDetalhado(@PathVariable UUID id) {
-        List<PedidoDetalhadoDTO> pedidos = pedidosRepository.buscarPedidoDetalhado(id);
+    @GetMapping("/order/details")
+    public ResponseEntity<List<PedidoDetalhadoDTO>> getAllPedidosDetalhados() {
+        List<PedidoDetalhadoDTO> pedidos = pedidosRepository.buscarPedidoDetalhado();
 
         if (pedidos.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(pedidos);
     }
+
 
     @PutMapping("/order/{id}")
     public ResponseEntity<Object> updatePedido(@PathVariable(value="id") UUID id,

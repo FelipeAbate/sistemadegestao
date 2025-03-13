@@ -37,7 +37,7 @@
     }
 
 
-    // Fazendo a requisição GET para o endpoint /products, para carregar produtos
+    // Fazendo a requisição GET para o endpoint /customers, para carregar customers(clientes)
     fetch('/customers')
         .then(response => {
             if (!response.ok) {

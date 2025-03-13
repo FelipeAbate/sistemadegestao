@@ -3,15 +3,15 @@
 
 
 // Fazendo a requisição GET para o endpoint /order, para carregar produtos
-   fetch('/order/details/96feab4e-78f8-4d21-b7f5-74defe2d9b5a')
+   fetch('/order/details')
            .then(response => {
                if (!response.ok) {
-                   throw new Error('Erro ao carregar os produtos.');
+                   throw new Error('Erro ao carregar os pedidos.');
                }
                return response.json();
            })
            .then(data => {
-               const tableBody = document.getElementById('productTableBody');
+               const tableBody = document.getElementById('pedidosTableBody');
                tableBody.innerHTML = ''; // Limpa o conteúdo existente
 
                // Preenche a tabela com os produtos
@@ -33,12 +33,13 @@
            })
            .catch(error => {
                console.error('Erro:', error);
-               alert('Não foi possível carregar os produtos.');
+               alert('Não foi possível carregar os pedidos.');
            });
+
 
 // Função para excluir um produto
                 function deleteRow(pedidoId) {
-                    if (confirm("Tem certeza que deseja excluir este produto?")) {
+                    if (confirm("Tem certeza que deseja excluir este pedido?")) {
                         fetch(`/order/${pedidoId}`, {
                             method: 'DELETE',
                             headers: {
@@ -47,7 +48,7 @@
                         })
                         .then(response => {
                             if (response.ok) {
-                                alert("Produto excluído com sucesso!");
+                                alert("Pedido excluído com sucesso!");
                                 // Remove a linha correspondente da tabela
                                 const row = document.querySelector(`[data-id="${pedidoId}"]`);
                                 if (row) row.remove();
