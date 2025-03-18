@@ -6,6 +6,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -32,6 +33,8 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
     private Calcas idProduto;
 
     private int quant;
+
+    private BigDecimal valorTotal;
 
     public UUID getIdPedido() {
         return idPedido;
@@ -71,5 +74,13 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
 
     public void setQuant(int quant) {
         this.quant = quant;
+    }
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValoraTotal(BigDecimal valoraTotal) {
+        this.valorTotal = valoraTotal;
     }
 }

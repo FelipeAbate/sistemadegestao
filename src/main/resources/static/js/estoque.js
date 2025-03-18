@@ -2,7 +2,7 @@
         //SCRIPT PARA ESTOQUE
 
 
-        //Função para preencher form Cadastro de Pedidos
+        //Função para preencher form Cadastro de Produtos
         async function submitForm() {
         const form = document.getElementById('productForm');
         const formData = new FormData(form);
@@ -78,9 +78,7 @@
                     <button class="quantity-option more-than-6">Mais de 6</button>
                     </div>
                     </td>
-
                 `;
-
                 tableBody.appendChild(row);
             });
         })
@@ -113,33 +111,44 @@
                     }
                 }
 
-    //função para abrir telinha opções quantidade
     async function screenAddCar(button) {
+        let row = button.closest('tr');
+
+        // Captura os valores da linha
+        let idProduto = row.cells[1].textContent.trim();
+        let preco = parseFloat(row.querySelector('.preco').value.trim()); // Converte para número
+
         let quantityBox = button.nextElementSibling;
 
-        // Fecha todos os outros quadros antes de abrir o atual
+        // Fecha outros quadros antes de abrir o atual
         document.querySelectorAll('.quantity-box').forEach(box => {
             if (box !== quantityBox) box.classList.add('hidden');
         });
 
-        // Alterna a exibição do quadro de opções
+        // Alterna exibição do quadro de opções
         quantityBox.classList.toggle('hidden');
 
         // Adiciona evento apenas se ainda não foi adicionado
         if (!quantityBox.dataset.eventsAdded) {
-            quantityBox.dataset.eventsAdded = "true"; // Marca que os eventos já foram adicionados
+            quantityBox.dataset.eventsAdded = "true"; // Marca eventos adicionados
 
             quantityBox.querySelectorAll('.quantity-option').forEach(option => {
                 option.addEventListener('click', function () {
-                    let selectedQty = this.getAttribute('data-qty') || 'Mais de 6';
-                    alert(`Você selecionou: ${selectedQty}`);
+                    let selectedQty = parseInt(this.getAttribute('data-qty')) || 6; // Padrão "Mais de 6"
+
+                    let valorTotal = selectedQty * preco; // Multiplica quantidade × preço
+
+                    // Redireciona com os valores na URL
+                    window.location.href =
+                    `http://localhost:8080/pedidos?idProduto=${idProduto}&quantidade=${selectedQty}&preco=${preco}&valorTotal=${valorTotal}`;
 
                     // Esconde o quadro depois da seleção
-                    quantityBox.classList.add('hidden');
+                    //quantityBox.classList.add('hidden');
                 });
             });
         }
     }
+
 
 
     // Função para habilitar a edição

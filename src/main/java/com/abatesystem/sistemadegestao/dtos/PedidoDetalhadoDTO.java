@@ -10,7 +10,8 @@ public record PedidoDetalhadoDTO(
         String nomeCliente,
         String descricao,
         int quant,
-        BigDecimal preco
+        BigDecimal preco,
+        BigDecimal valorTotal
 ){}
 
 //  DTO para JOIN

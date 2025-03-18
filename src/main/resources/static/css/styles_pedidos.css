@@ -7,6 +7,39 @@ h1 {
     text-align: center;
 }
 
+form {
+     display: grid;
+     grid-template-columns: repeat(4, 1fr);
+     gap: 15px;
+     grid-template-rows: auto auto; /* Duas linhas */
+     margin-top: 47px;
+}
+
+.form-group1 {
+   grid-column: span 4; /* Ocupa todas as 4 colunas */
+
+}
+
+.form-group1 input {
+     width: 98.5%;
+}
+
+.form-group1, .form-group {
+     display: flex;
+     flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input {
+    width: 94%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
 button {
     grid-column: span 4;
@@ -18,6 +51,7 @@ button {
     cursor: pointer;
 }
 
+/*
 .buttonExcluir {
     background-color: white;
     color: red;
@@ -39,13 +73,13 @@ table {
 }
 
 thead th {
-    border-left: none;  /* Remove bordas verticais */
+    border-left: none;  /* Remove bordas verticais
     border-right: none;
     position: sticky;
     top: 0;
-    background: white; /* Fundo branco para sobrepor os dados */
-    z-index: 10; /* Mantém o cabeçalho acima do tbody */
-    border-bottom: 2px solid black; /* Destaca a separação */
+    background: white; /* Fundo branco para sobrepor os dados
+    z-index: 10; /* Mantém o cabeçalho acima do tbody
+    border-bottom: 2px solid black; /* Destaca a separação
 }
 
 
@@ -56,7 +90,7 @@ th, td {
 }
 
 tbody td {
-    border-left: none;  /* Remove bordas verticais */
+    border-left: none;  /* Remove bordas verticais
     border-right: none;
 }
 
@@ -81,8 +115,9 @@ table th:nth-child(6), table td:nth-child(6),
     width: 9%;
 }
 
-table td:nth-child(7), table th:nth-child(7) {
+table td:nth-child(8), table th:nth-child(8) {
     border-right: 1px solid #ccc;
+    width: 9%;
 }
 
 table input {
@@ -94,17 +129,17 @@ table input {
     border-radius: 1px;
 }
 
-/* Ajusta o estilo ao desabilitar os inputs */
+/* Ajusta o estilo ao desabilitar os inputs
 table input:disabled {
     background-color: white;
-    color: #666; /* Cor do texto */
+    color: #666; /* Cor do texto
     border: 0px;
     cursor: not-allowed;
 }
 
 
 
-/* estilo do quadro add Carrinho  */
+/* estilo do quadro add Carrinho
 .hidden {
  display: none;
 }
@@ -126,3 +161,80 @@ table input:disabled {
  padding: 5px;
  cursor: pointer;
 }
+
+*/
+
+/*TB_CLIENTES */
+     .table-container {
+             max-height: 450px; /* Altura máxima da tabela antes da rolagem */
+             overflow-y: auto; /* Adiciona rolagem vertical */
+             border: 1px solid #ccc; /* Apenas para visualização */
+             margin-bottom: 400px; / *Um espaço em baixo da table para ficar mais confortável */
+         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+        }
+
+        thead th {
+            border-top: none;
+            border-left: none;  /* Remove bordas verticais */
+            border-right: none;
+            position: sticky;
+            top: 0;
+            background: white; /* Fundo branco para sobrepor os dados */
+            z-index: 10; /* Mantém o cabeçalho acima do tbody */
+            border-bottom: 2px solid black; /* Destaca a separação */
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        tbody td {
+            border-left: none;  /* Remove bordas verticais */
+            border-right: none;
+        }
+
+        table td:nth-child(1)  {
+            border-right: none;
+            width: 10%;
+        }
+
+        table td:nth-child(2)  {
+            border-left: none;
+        }
+
+        table th:nth-child(3), table td:nth-child(3)  {
+            width: 17%;
+        }
+
+        table th:nth-child(4), table td:nth-child(4)  {
+             width: 13%;
+        }
+
+        table th:nth-child(5), table td:nth-child(5)  {
+            width: 33%;
+        }
+
+        table input {
+            width: 70%;
+            padding: 9px;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+        }
+
+        /* Ajusta o estilo ao desabilitar os inputs */
+        table input:disabled {
+            background-color: white;
+            color: #666; /* Cor do texto */
+            border: 0px;
+            cursor: not-allowed;
+        }
+

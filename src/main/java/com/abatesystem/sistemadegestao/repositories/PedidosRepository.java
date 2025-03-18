@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface PedidosRepository extends JpaRepository<Pedidos, UUID>{
 
     @Query("SELECT new com.abatesystem.sistemadegestao.dtos.PedidoDetalhadoDTO( " +
-            "p.idPedido, p.dataCriacao, c.nomeCliente, cal.descricao, p.quant, cal.preco) " +
+            "p.idPedido, p.dataCriacao, c.nomeCliente, cal.descricao, p.quant, cal.preco, p.valorTotal) " +
             "FROM Pedidos p " +
             "JOIN p.idProduto cal " +
             "JOIN p.idCliente c "

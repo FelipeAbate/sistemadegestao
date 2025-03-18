@@ -3,8 +3,10 @@ package com.abatesystem.sistemadegestao.controllers;
 import com.abatesystem.sistemadegestao.dtos.PedidoDetalhadoDTO;
 import com.abatesystem.sistemadegestao.dtos.PedidosRecordDto;
 import com.abatesystem.sistemadegestao.dtos.PedidosResponseDto;
+import com.abatesystem.sistemadegestao.models.Clientes;
 import com.abatesystem.sistemadegestao.models.Pedidos;
 import com.abatesystem.sistemadegestao.models.Calcas;
+import com.abatesystem.sistemadegestao.repositories.ClientesRepository;
 import com.abatesystem.sistemadegestao.repositories.PedidosRepository;
 
 import com.abatesystem.sistemadegestao.repositories.CalcasRepository;
@@ -31,6 +33,9 @@ public class ControllerPedidosApi {
     PedidosRepository pedidosRepository;
 
     @Autowired
+    ClientesRepository clientesRepository;
+
+    @Autowired
     CalcasRepository calcasRepository;
 
     @PostMapping("/order")
@@ -42,10 +47,16 @@ public class ControllerPedidosApi {
         Calcas produto = calcasRepository.findById(pedidosRecordDto.idProduto())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
 
-        pedidos.setIdProduto(produto);
+        // Buscar o cliente pelo ID e associá-lo ao pedido
+        Clientes cliente = clientesRepository.findById(pedidosRecordDto.idCliente())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+
+        pedidos.setIdProduto(produto);  // Associa o produto
+        pedidos.setIdCliente(cliente);  // Associa o cliente
 
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidosRepository.save(pedidos));
     }
+
 
     // Fazendo a requisição GET para o endpoint ('/order') Mostra todos pedidos
     // select * from tb_pedidos
