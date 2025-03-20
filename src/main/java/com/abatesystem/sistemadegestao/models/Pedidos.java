@@ -80,7 +80,7 @@ public class Pedidos extends RepresentationModel<Pedidos> implements Serializabl
         return valorTotal;
     }
 
-    public void setValoraTotal(BigDecimal valoraTotal) {
-        this.valorTotal = valoraTotal;
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
     }
 }

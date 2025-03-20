@@ -1,8 +1,8 @@
 package com.abatesystem.sistemadegestao.controllers;
 
-import com.abatesystem.sistemadegestao.dtos.PedidoDetalhadoDTO;
+import com.abatesystem.sistemadegestao.dtos.PedidosRecordDetalhadoDto;
 import com.abatesystem.sistemadegestao.dtos.PedidosRecordDto;
-import com.abatesystem.sistemadegestao.dtos.PedidosResponseDto;
+import com.abatesystem.sistemadegestao.dtos.PedidosRecordResponseDto;
 import com.abatesystem.sistemadegestao.models.Clientes;
 import com.abatesystem.sistemadegestao.models.Pedidos;
 import com.abatesystem.sistemadegestao.models.Calcas;
@@ -61,10 +61,10 @@ public class ControllerPedidosApi {
     // Fazendo a requisição GET para o endpoint ('/order') Mostra todos pedidos
     // select * from tb_pedidos
     @GetMapping("/order")
-    public ResponseEntity<List<PedidosResponseDto>> getAllPedidos() {
-        List<PedidosResponseDto> pedidos = pedidosRepository.findAll()
+    public ResponseEntity<List<PedidosRecordResponseDto>> getAllPedidos() {
+        List<PedidosRecordResponseDto> pedidos = pedidosRepository.findAll()
                 .stream()
-                .map(PedidosResponseDto::new) // Converte os pedidos para o DTO de saída
+                .map(PedidosRecordResponseDto::new) // Converte os pedidos para o DTO de saída
                 .toList();
         return ResponseEntity.ok(pedidos);
     }
@@ -85,8 +85,8 @@ public class ControllerPedidosApi {
 
     //Faz o JOIN Pedido perfeitamente e nada mais
     @GetMapping("/order/details")
-    public ResponseEntity<List<PedidoDetalhadoDTO>> getAllPedidosDetalhados() {
-        List<PedidoDetalhadoDTO> pedidos = pedidosRepository.buscarPedidoDetalhado();
+    public ResponseEntity<List<PedidosRecordDetalhadoDto>> getAllPedidosDetalhados() {
+        List<PedidosRecordDetalhadoDto> pedidos = pedidosRepository.buscarPedidoDetalhado();
 
         if (pedidos.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

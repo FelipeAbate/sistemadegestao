@@ -6,12 +6,28 @@
     <title>Pedidos</title>
     <link rel="stylesheet" th:href="@{css/styles_pedidos.css}">
     <script th:src="@{/js/pedidos.js}"></script>
-
 </head>
 
 <body>
 
 <h1> Pedido em andamento</h1>
+
+<p> <strong> Selecione cliente do pedido </strong>
+    <button class="btnCarregarClientes" onclick="btnCarregarClientes()">
+        <img th:src="@{/images/image-set-select.jpg}" alt="image-set-select">
+    </button>
+</p>
+
+<div class="table-container">
+    <table>
+
+        <!-- th -->
+
+        <tbody id="clientesTableBody">
+        <!-- Os dados serão preenchidos aqui pelo JavaScript -->
+        </tbody>
+    </table>
+</div>
 
 <form id="pedidoForm">
 
@@ -42,26 +58,7 @@
 
     <button type="button" onclick="submitForm()">Salvar Pedido</button>
 </form>
-
-<p> Selecione o cliente</p>
-<div class="table-container">
-    <table>
-        <thead>
-        <tr>
-            <th>ID CLIENTE</th>
-            <th>NOME</th>
-            <th>SOBRE NOME</th>
-            <th>ENDEREÇO</th>
-            <th>TELEFONE</th>
-
-        </tr>
-        </thead>
-
-        <tbody id="clientesTableBody">
-        <!-- Os dados serão preenchidos aqui pelo JavaScript -->
-        </tbody>
-    </table>
-</div>
+<br><br>
 
 <h2>Pedidos Detalhados</h2>
 

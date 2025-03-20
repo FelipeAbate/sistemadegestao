@@ -1,8 +1,8 @@
 
 // Java Script Para PEDIDOS
 
-
-// Fazendo a requisição GET para o endpoint /customers, para carregar customers(clientes)
+// Fazendo a requisição GET para o endpoint /customers, para carregar os clientes
+function btnCarregarClientes() {
     fetch('/customers')
         .then(response => {
             if (!response.ok) {
@@ -12,14 +12,14 @@
         })
         .then(data => {
             const tableBody = document.getElementById('clientesTableBody');
-            tableBody.innerHTML = ''; // Limpa o conteúdo existente
+            tableBody.innerHTML = ''; // Limpa a tabela antes de adicionar novos dados
 
-            // Preenche a tabela com os produtos
+            // Preenche a tabela com os dados dos clientes
             data.forEach(cliente => {
                 const row = document.createElement('tr');
                 row.id = `row-${cliente.idCliente}`;
                 row.innerHTML = `
-
+                    <td><button onclick="btnSelecionarCliente('${cliente.idCliente}')">Selecionar</button></td>
                     <td>${cliente.idCliente}</td>
                     <td><input type="text" class="nomeCliente" value="${cliente.nomeCliente}" disabled></td>
                     <td><input type="text" class="sobreNomeCliente" value="${cliente.sobreNomeCliente}" disabled></td>
@@ -31,13 +31,30 @@
         })
         .catch(error => {
             console.error('Erro:', error);
-            alert('Não foi possível carregar clientes.');
+            alert('Não foi possível carregar os clientes.');
         });
+}
+
+function btnSelecionarCliente(idCliente) {
+    const tableBody = document.getElementById('clientesTableBody');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    // Oculta todas as linhas, exceto a selecionada
+    for (let row of rows) {
+        if (row.id !== `row-${idCliente}`) {
+            row.style.display = 'none';
+        }
+    }
+
+    // Define o valor do input hidden no formulário
+    document.getElementById('idCliente').value = idCliente;
+}
+
 
 
 
  //Função para preencher form Pedido
-         async function submitForm() {
+      async function submitForm() {
          const form = document.getElementById('pedidoForm');
          const formData = new FormData(form);
 
@@ -68,7 +85,7 @@
          } catch (error) {
              alert(`Erro de rede: ${error}`);
          }
-     }
+      }
 
 
 // Fazendo a requisição GET para o endpoint /order, para carregar pedidos
@@ -91,7 +108,7 @@
 
                        <td><button class="buttonExcluir" onclick="deleteRow('${pedido.idPedido}')">Excluir</button></td>
                        <td>${pedido.idPedido}</td>
-                       <td><input type="date" value="${pedido.dataCriacao}" disabled></td>
+                       <td><input type="text" value="${pedido.dataCriacao}" disabled></td>
                        <td><input type="text" class="nomeCliente" value="${pedido.nomeCliente}" disabled></td>
                        <td><input type="text" class="descricao" value="${pedido.descricao}" disabled></td>
                        <td><input type="number" class="quant" value="${pedido.quant}" disabled></td>
@@ -131,31 +148,33 @@
                 }
 
 
-                document.addEventListener("DOMContentLoaded", function () {
-                    // Obtém os parâmetros da URL
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const idProduto = urlParams.get("idProduto");
-                    const preco = urlParams.get("preco");
-                    const quantidade = urlParams.get("quantidade");
-                    const valorTotal = urlParams.get("valorTotal");
+document.addEventListener("DOMContentLoaded", function () {
+    // Obtém os parâmetros da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const idProduto = urlParams.get("idProduto");
+    const preco = urlParams.get("preco");
+    const quantidade = urlParams.get("quantidade");
+    const valorTotal = urlParams.get("valorTotal");
 
-                    // Se houver uma quantidade na URL, preenche o campo do formulário
-                    if (idProduto) {
-                            document.getElementById("idProduto").value = idProduto;
-                        }
+        // Se houver uma quantidade na URL, preenche o campo do formulário
+        if (idProduto) {
+              document.getElementById("idProduto").value = idProduto;
+        }
 
-                    if (preco) {
-                            document.getElementById("preco").value = preco;
-                        }
+        if (preco) {
+              document.getElementById("preco").value = preco;
+        }
 
-                    if (quantidade) {
-                        document.getElementById("quant").value = quantidade;
-                    }
+        if (quantidade) {
+              document.getElementById("quant").value = quantidade;
+        }
 
-                    if (valorTotal) {
-                       document.getElementById("valorTotal").value = valorTotal;
-                    }
-                });
+        if (valorTotal) {
+              document.getElementById("valorTotal").value = valorTotal;
+        }
+
+});
+
 
 
 
