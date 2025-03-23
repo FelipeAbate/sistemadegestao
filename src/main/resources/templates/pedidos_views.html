@@ -7,66 +7,15 @@
     <link rel="stylesheet" th:href="@{css/styles_pedidos.css}">
     <script th:src="@{/js/pedidos.js}"></script>
 </head>
-
 <body>
-
-<h1> Pedido em andamento</h1>
-
-<p> <strong> Selecione cliente do pedido </strong>
-    <button class="btnCarregarClientes" onclick="btnCarregarClientes()">
-        <img th:src="@{/images/image-set-select.jpg}" alt="image-set-select">
-    </button>
-</p>
-
-<div class="table-container">
-    <table>
-
-        <!-- th -->
-
-        <tbody id="clientesTableBody">
-        <!-- Os dados serão preenchidos aqui pelo JavaScript -->
-        </tbody>
-    </table>
-</div>
-
-<form id="pedidoForm">
-
-    <div class="form-group1">
-        <label for="idCliente">ID CLIENTE</label>
-        <input type="text" id="idCliente" name="idCliente" placeholder="idCliente" required>
-    </div>
-
-    <div class="form-group">
-        <label for="idProduto">ID PRODUTO</label>
-        <input type="text" id="idProduto" name="idProduto" placeholder="idProduto" required>
-    </div>
-
-    <div class="form-group">
-        <label for="quant">QTDE PEDIDA</label>
-        <input type="number" id="quant" name="quant" placeholder="quant" required>
-    </div>
-
-    <div class="form-group">
-        <label for="preco">PREÇO</label>
-        <input type="number" id="preco" name="preco" placeholder="preco" required>
-    </div>
-
-    <div class="form-group">
-        <label for="valorTotal">VALOR TOTAL</label>
-        <input type="number" id="valorTotal" name="valorTotal" placeholder="valorTotal" required>
-    </div>
-
-    <button type="button" onclick="submitForm()">Salvar Pedido</button>
-</form>
-<br><br>
 
 <h2>Pedidos Detalhados</h2>
 
-<div>
+<div class="table-container-pedidos">
     <table>
         <thead>
         <tr>
-            <th> <!-- Excluir --> </th>
+            <th> AÇÕES </th>
             <th>ID PEDIDO</th>
             <th>DATA PEDIDO</th>
             <th>NOME CLIENTE</th>

@@ -38,9 +38,6 @@
 </form>
 
 <div class="borderDivisor">
-    <a href="http://localhost:8080/pedidos" target="_self">
-        <button class="buttonCarrinho" >Carrinho</button>
-    </a>
 
     <h2>Lista de Produtos</h2>
 </div>
@@ -65,7 +62,56 @@
 </table>
 </div>
 
-</body>
+<h3> Pedido em andamento</h3>
 
+<p> <strong> Selecione cliente do pedido </strong> </p>
+
+<button class="btnCarregarClientes" onclick="btnCarregarClientes()">
+    <img th:src="@{images/image-set-select.jpg}" alt="image-set-select">
+</button>
+
+<div class="table-container-clientes">
+    <table>
+        <!-- th -->
+        <tbody id="clientesTableBody">
+        <!-- Os dados serão preenchidos aqui pelo JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<form class="form-pedidos" id="pedidoForm">
+
+    <div class="form-group-pedido-1">
+        <label for="idCliente">ID CLIENTE</label>
+        <input type="text" id="idClienteInput" name="idCliente" placeholder="id Cliente" required>
+    </div>
+
+    <div class="form-group-pedido">
+        <label for="idProduto">ID PRODUTO</label>
+        <input type="text" id="idProduto" name="idProduto" placeholder="id Produto" required>
+    </div>
+
+    <div class="form-group-pedido">
+        <label for="qtdePedida">QTDE PEDIDA</label>
+        <input type="number" id="qtdePedida" name="qtdePedida" placeholder="Quantidade pedida" required>
+    </div>
+
+    <div class="form-group-pedido">
+        <label for="precoPdtPedido">PREÇO</label>
+        <input type="number" id="precoPdtPedido" name="precoPdtPedido" placeholder="Preço" required>
+    </div>
+
+    <div class="form-group-pedido">
+        <label for="valorTotal">VALOR TOTAL</label>
+        <input type="number" id="valorTotal" name="valorTotal" placeholder="valorTotal" required>
+    </div>
+    <button type="button" onclick="submitFormPedido()">Salvar Pedido</button>
+</form>
+
+<a href="http://localhost:8080/pedidos" target="_self">
+    <button class="buttonCarrinho" >Ver todos pedidos</button>
+</a>
+
+</body>
 </html>
 
